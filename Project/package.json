@@ -5,6 +5,11 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "typechain": "typechain --target ethers-v5 artifacts/contracts/CustomBallot.sol/CustomBallot.json",
+    "test": "hardhat test"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
     "chai": "^4.3.6",
