@@ -107,23 +107,14 @@ Error in plugin @nomiclabs/hardhat-etherscan: Contract source code already verif
 ❯ yarn hardhat verify --network ropsten --constructor-args scripts/constructorArgs.ts 0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6
 yarn run v1.22.15
 $ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/hardhat verify --network ropsten --constructor-args scripts/constructorArgs.ts 0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6
-Nothing to compile
-No need to generate any newer typings.
+Generating typings for: 12 artifacts in dir: typechain for target: ethers-v5
+Successfully generated 17 typings!
+Compiled 12 Solidity files successfully
 Successfully submitted source code for contract
 contracts/CustomBallot.sol:CustomBallot at 0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6
 for verification on the block explorer. Waiting for verification result...
 
-We tried verifying your contract CustomBallot without including any unrelated one, but it failed.
-Trying again with the full solc input used to compile and deploy it.
-This means that unrelated contracts may be displayed on Etherscan...
-
-Successfully submitted source code for contract
-contracts/CustomBallot.sol:CustomBallot at 0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6
-for verification on the block explorer. Waiting for verification result...
-
-Error in plugin @nomiclabs/hardhat-etherscan: The contract verification failed.
-Reason: Fail - Unable to verify
-
-
-... fails ... why?
+Successfully verified contract CustomBallot on Etherscan.
+https://ropsten.etherscan.io/address/0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6#code
+✨  Done in 38.27s.
 ```
