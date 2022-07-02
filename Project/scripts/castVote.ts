@@ -6,7 +6,6 @@ import { CustomBallot, MyToken } from "../typechain";
 
 async function main() {
   const BASE_VOTE_POWER = 5;
-  const BASE_MINT_AMOUNT = 20;
 
   const ballotContractAddress = process.argv[2];
   if (!ballotContractAddress) {
@@ -47,47 +46,19 @@ async function main() {
     signer
   ) as MyToken;
 
-  const previousBalanceTx = await myTokenContract.balanceOf(signerAddress);
-  console.log(
-    `Minting tokens for address ${signerAddress}, previous balance : ${ethers.utils.formatEther(
-      previousBalanceTx
-    )} tokens...`
-  );
-  const mintTx = await myTokenContract.mint(
-    signerAddress,
-    ethers.utils.parseEther(BASE_MINT_AMOUNT.toFixed(18))
-  );
-  await mintTx.wait();
-  const newBalanceTx = await myTokenContract.balanceOf(signerAddress);
-  console.log(
-    `Minted tokens for address ${signerAddress}, new balance : ${ethers.utils.formatEther(
-      newBalanceTx
-    )} tokens.`
-  );
-
-  console.log(
-    "Self delegating to track voting power and enable checkpoints..."
-  );
-  const previousVotingPower = await ballotContract.votingPower();
-  console.log(`Previous voting power : ${previousVotingPower}`);
-  const delegateTx = await myTokenContract.delegate(signerAddress);
-  await delegateTx.wait();
-  const newVotingPower = await ballotContract.votingPower();
-  console.log(`New voting power : ${newVotingPower}`);
-
   const currentProposalToVote = await ballotContract.proposals(
     proposalIndexToVote
   );
   console.log(
-    `Proposal to vote on has currently ${currentProposalToVote.voteCount} votes.`
+    `Proposal to vote on has currently ${ethers.utils.formatEther(
+      currentProposalToVote.voteCount
+    )} votes.`
   );
-  const votingPowerBefore = await ballotContract.votingPower();
+
   console.log(
-    `${signerAddress} has ${ethers.utils.formatEther(
-      votingPowerBefore
-    )} voting power before voting.`
+    `Casting vote on proposal index ${proposalIndexToVote} using ${BASE_VOTE_POWER} vote power...`
   );
-  console.log(`Casting vote on proposal index ${proposalIndexToVote}...`);
+
   const voteTx = await ballotContract.vote(
     proposalIndexToVote,
     ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
@@ -95,13 +66,21 @@ async function main() {
 
   const proposalUpdated = await ballotContract.proposals(proposalIndexToVote);
   console.log(
-    `Proposal to vote on has now ${proposalUpdated.voteCount} votes.`
+    `Proposal to vote on has now ${ethers.utils.formatEther(
+      currentProposalToVote.voteCount
+    )} votes.`
   );
   const votingPowerAfter = await ballotContract.votingPower();
   console.log(
     `Account ${signerAddress} has now ${ethers.utils.formatEther(
       votingPowerAfter
-    )} voting power.`
+    )} voting power left.`
+  );
+  const spentVotePower = await ballotContract.spentVotePower(signerAddress);
+  console.log(
+    `Spent vote power for ${signerAddress} : ${ethers.utils.formatEther(
+      spentVotePower
+    )}`
   );
 }
 
