@@ -7,6 +7,7 @@
 - Tobias Leinss <caruso33@web.de>
 - Lucien Akchoté <l.akchote@gmail.com>
 - Alok Sahay <alok.sahay87@gmail.com>
+- Ana G. Jordano <anagjordano@gmail.com>
 
 ## Deploying contract
 
