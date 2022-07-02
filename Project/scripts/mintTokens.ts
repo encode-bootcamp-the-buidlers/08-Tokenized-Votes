@@ -26,7 +26,7 @@ async function main() {
   const { signer } = getSignerProvider(wallet, network);
 
   console.log(
-    `Attaching to Ballot contract address ${myTokenContractAddress}...`
+    `Attaching to Token contract address ${myTokenContractAddress}...`
   );
   const myTokenContract = new ethers.Contract(
     myTokenContractAddress,
