@@ -38,4 +38,48 @@ function getSignerProvider(
   return { provider, signer };
 }
 
-export { getWallet, getSignerProvider };
+const testNetVoters = [
+  {
+    address: "0x49E499F56dA1aFd2c734584a2f3e5E7B5ad72ebb",
+    owner: "Luc",
+  },
+  {
+    address: "0x10f403726407d55de84ac831405516Fc4821b937",
+    owner: "Alok",
+  },
+  {
+    address: "0x4bFC74983D6338D3395A00118546614bB78472c2",
+    owner: "Tobias",
+  },
+  {
+    address: "0xD89ffDef0d21c3E03A6AF09Aa31695B6e0414c31",
+    owner: "Vid",
+  },
+  {
+    address: "0x5Ed02CF700D92d64776e11c6E85D2D7d11e9bcf8",
+    owner: "Bitcoinera",
+  },
+];
+
+async function getVotingAddresses(network: string) {
+  if (network !== "localhost") {
+    return testNetVoters.map((voter) => voter.address);
+  } else {
+    const isUsingMnemonic =
+      process.env.MNEMONIC && process.env.MNEMONIC.length > 0;
+
+    if (!isUsingMnemonic) return [];
+
+    const voters = [];
+    for (let i = 0; i < 5; i++) {
+      const path = `m/44'/60'/0'/0/${i}`;
+      const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC!, path);
+      const { signer } = getSignerProvider(wallet, network);
+
+      voters.push(await signer.getAddress());
+    }
+    return voters;
+  }
+}
+
+export { getWallet, getSignerProvider, getVotingAddresses };

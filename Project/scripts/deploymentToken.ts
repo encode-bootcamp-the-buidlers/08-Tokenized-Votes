@@ -1,16 +1,8 @@
 import "dotenv/config";
 import { ethers } from "ethers";
 import * as myTokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
-import * as customBalletJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
-import { getSignerProvider, getWallet } from "./utils";
 
-function convertStringArrayToBytes32(array: string[]) {
-  const bytes32Array = [];
-  for (let index = 0; index < array.length; index++) {
-    bytes32Array.push(ethers.utils.formatBytes32String(array[index]));
-  }
-  return bytes32Array;
-}
+import { getSignerProvider, getVotingAddresses, getWallet } from "./utils";
 
 async function main() {
   const BASE_MINT_AMOUNT = 20;
@@ -43,6 +35,7 @@ async function main() {
 
   console.log(`Contract deployed at ${myTokenContract.address}`);
 
+  // minting for signer
   const previousBalanceTx = await myTokenContract.balanceOf(signerAddress);
   console.log(
     `Minting tokens for address ${signerAddress}, previous balance : ${ethers.utils.formatEther(
@@ -58,43 +51,40 @@ async function main() {
   console.log(
     `Minted tokens for address ${signerAddress}, new balance : ${ethers.utils.formatEther(
       newBalanceTx
-    )} tokens.`
+    )} tokens.\n`
   );
 
+  // minting for preset addresses
+  const voterAddresses = (await getVotingAddresses(network)).filter(
+    (address) => address !== signerAddress
+  );
+
+  if (voterAddresses.length !== 0) {
+    console.log("Minting for preset addresses...");
+  }
+  for (const voterAddress of voterAddresses) {
+    console.log(`Minting ${BASE_MINT_AMOUNT} tokens to ${voterAddress}...`);
+    await myTokenContract.mint(
+      voterAddress,
+      ethers.utils.parseEther(BASE_MINT_AMOUNT.toFixed(18))
+    );
+  }
+
+  // delegation
   console.log(
-    "Self delegating to track voting power and enable checkpoints..."
+    "\nSelf delegating to track voting power and enable checkpoints..."
   );
-
+  const previousVotesTx = await myTokenContract.getVotes(signerAddress);
   const delegateTx = await myTokenContract.delegate(signer.address);
   await delegateTx.wait();
-  console.log("Completed");
-
-  console.log("__________________________________________________");
-
-  console.log("Deploying CustomBallot contract");
-
-  console.log("Proposals: ");
-  const proposals = process.argv.slice(3);
-  if (proposals.length < 2) throw new Error("Not enough proposals provided");
-  proposals.forEach((element, index) => {
-    console.log(`Proposal N. ${index + 1}: ${element}`);
-  });
-
-  const customBallotFactory = new ethers.ContractFactory(
-    customBalletJson.abi,
-    customBalletJson.bytecode,
-    signer
-  );
-  const customBallotContract = await customBallotFactory.deploy(
-    convertStringArrayToBytes32(proposals),
-    myTokenContract.address
+  const newVotesTx = await myTokenContract.getVotes(signerAddress);
+  console.log(
+    `Address ${signerAddress}, previous votes: ${ethers.utils.formatEther(
+      previousVotesTx
+    )} current votes: ${ethers.utils.formatEther(newVotesTx)}`
   );
 
-  console.log("Awaiting confirmations");
-  await customBallotContract.deployed();
-
   console.log("Completed");
-  console.log(`Contract deployed at ${customBallotContract.address}`);
 
   console.log("__________________________________________________");
 }
