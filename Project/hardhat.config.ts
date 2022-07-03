@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 
 import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-ethers"
+import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
@@ -39,7 +39,7 @@ const config: HardhatUserConfig = {
     },
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
+    enabled: process.env.REPORT_GAS === "true",
     currency: "USD",
   },
   etherscan: {

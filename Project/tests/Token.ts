@@ -80,7 +80,7 @@ describe("MyToken", function () {
 
         expect(accountCheckpointsAfter).to.eq(1);
       });
-      
+
       it("should not update checkpoints if he has not delegated to himself", async () => {
         const accountCheckpointsAfter = await myTokenContract.numCheckpoints(
           accounts[0].address
@@ -88,7 +88,50 @@ describe("MyToken", function () {
 
         expect(accountCheckpointsAfter).to.eq(0);
       });
+
+      it("should be able to delegate voting power", async () => {
+        const delegatee = accounts[1],
+          delegateeAddress = accounts[1].address;
+
+        mintTx = await myTokenContract.mint(
+          delegateeAddress,
+          ethers.utils.parseEther(BASE_MINT_AMOUNT.toFixed(18))
+        );
+
+        const delegateeConnect = myTokenContract.connect(delegatee);
+
+        let votingPowerBefore = await myTokenContract.getVotes(
+          delegateeAddress
+        );
+
+        // minting alone doesn't give voting power
+        expect(ethers.utils.formatUnits(votingPowerBefore)).to.eq(
+          (0.0).toFixed(1)
+        );
+
+        // self-delegation triggers the snapshot
+        await delegateeConnect.delegate(delegateeAddress);
+
+        let currentVotingPower = await delegateeConnect.getVotes(
+          delegateeAddress
+        );
+
+        expect(Number(ethers.utils.formatUnits(currentVotingPower))).to.eq(
+          Number(ethers.utils.formatUnits(votingPowerBefore)) + BASE_MINT_AMOUNT
+        );
+
+        // delegation triggers the snapshot
+        await myTokenContract.delegate(delegateeAddress);
+
+        votingPowerBefore = currentVotingPower;
+        currentVotingPower = await delegateeConnect.getVotes(delegateeAddress);
+
+        expect(Number(ethers.utils.formatUnits(currentVotingPower))).to.eq(
+          Number(ethers.utils.formatUnits(votingPowerBefore)) + BASE_MINT_AMOUNT
+        );
+      });
     });
+
     describe("And the sender has not the MINTER_ROLE", function () {
       it("should fail", async () => {
         const mintTx = myTokenContract

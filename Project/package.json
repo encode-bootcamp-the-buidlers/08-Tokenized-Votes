@@ -11,8 +11,10 @@
     "test": "hardhat test",
     "node": "hardhat node",
     "create:args": "ts-node scripts/createConstructorArgs.ts Pizza Lasagna Icecream",
-    "deploy:local": "ts-node scripts/deployment.ts localhost Pizza Lasagna Icecream",
-    "deploy:ropsten": "ts-node scripts/deployment.ts ropsten Pizza Lasagna Icecream"
+    "deploy:local:token": "ts-node scripts/deploymentToken.ts localhost",
+    "deploy:local:ballot": "ts-node scripts/deploymentBallot.ts localhost DEPLOYED_TOKEN_ADDRESS Pizza Lasagna Icecream",
+    "deploy:ropsten:token": "ts-node scripts/deploymentToken.ts ropsten",
+    "deploy:ropsten:ballot": "ts-node scripts/deploymentBallot.ts ropsten DEPLOYED_TOKEN_ADDRESS Pizza Lasagna Icecream"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
