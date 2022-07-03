@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers } from "hardhat";
 import { getSignerProvider, getWallet } from "./utils";
 import * as myTokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
 import { MyToken } from "../typechain";
@@ -13,7 +13,7 @@ async function main() {
     throw new Error("Address to send tokens to needs to be specified.");
   }
   const amount = process.argv[4];
-  if (!amount) {
+  if (!amount || isNaN(Number(amount))) {
     throw new Error("Amount of tokens to be minted needs to be specified.");
   }
   const network = process.argv[5];
