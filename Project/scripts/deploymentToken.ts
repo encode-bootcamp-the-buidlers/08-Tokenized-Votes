@@ -35,6 +35,7 @@ async function main() {
 
   console.log(`Contract deployed at ${myTokenContract.address}`);
 
+  // minting for signer
   const previousBalanceTx = await myTokenContract.balanceOf(signerAddress);
   console.log(
     `Minting tokens for address ${signerAddress}, previous balance : ${ethers.utils.formatEther(
@@ -50,18 +51,18 @@ async function main() {
   console.log(
     `Minted tokens for address ${signerAddress}, new balance : ${ethers.utils.formatEther(
       newBalanceTx
-    )} tokens.`
+    )} tokens.\n`
   );
 
-  console.log(
-    "Self delegating to track voting power and enable checkpoints..."
-  );
-
-  const voterAddresses = await getVotingAddresses(network);
-
-  for (const voterAddress of voterAddresses.filter(
+  // minting for preset addresses
+  const voterAddresses = (await getVotingAddresses(network)).filter(
     (address) => address !== signerAddress
-  )) {
+  );
+
+  if (voterAddresses.length !== 0) {
+    console.log("Minting for preset addresses...");
+  }
+  for (const voterAddress of voterAddresses) {
     console.log(`Minting ${BASE_MINT_AMOUNT} tokens to ${voterAddress}...`);
     await myTokenContract.mint(
       voterAddress,
@@ -69,8 +70,20 @@ async function main() {
     );
   }
 
+  // delegation
+  console.log(
+    "\nSelf delegating to track voting power and enable checkpoints..."
+  );
+  const previousVotesTx = await myTokenContract.getVotes(signerAddress);
   const delegateTx = await myTokenContract.delegate(signer.address);
   await delegateTx.wait();
+  const newVotesTx = await myTokenContract.getVotes(signerAddress);
+  console.log(
+    `Address ${signerAddress}, previous votes: ${ethers.utils.formatEther(
+      previousVotesTx
+    )} current votes: ${ethers.utils.formatEther(newVotesTx)}`
+  );
+
   console.log("Completed");
 
   console.log("__________________________________________________");
