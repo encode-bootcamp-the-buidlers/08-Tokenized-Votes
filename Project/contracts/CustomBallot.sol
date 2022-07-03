@@ -59,4 +59,8 @@ contract CustomBallot {
             voteToken.getPastVotes(msg.sender, referenceBlock) -
             spentVotePower[msg.sender];
     }
+
+    function getProposals() public view returns (Proposal[] memory) {
+        return proposals;
+    }
 }
