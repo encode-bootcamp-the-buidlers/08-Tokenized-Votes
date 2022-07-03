@@ -29,11 +29,15 @@ async function main() {
   ]);
 
   // Phase 2: deploy ballot
-
-  const deployBallot = childProcess.fork(__dirname + "/deploymentBallot", [
-    network,
-    myTokenContractAddress,
-  ]);
+  selfDelegate.on("exit", () => {
+    const deployBallot = childProcess.fork(__dirname + "/deploymentBallot", [
+      network,
+      myTokenContractAddress,
+      `Pizza`,
+      `Lasagna`,
+      `Icecream`,
+    ]);
+  });
 }
 
 main().catch((error) => {
