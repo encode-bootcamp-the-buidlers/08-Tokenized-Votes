@@ -1,3 +1,7 @@
+import { ethers } from "ethers";
+import { getSignerProvider, getWallet } from "./utils";
+import * as myTokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
+import { MyToken } from "../typechain";
 import childProcess from "child_process";
 
 async function main() {
@@ -21,6 +25,25 @@ async function main() {
   if (!network) {
     throw new Error("Network needs to be specified.");
   }
+  const wallet = getWallet();
+  const { signer } = getSignerProvider(wallet, network);
+
+  console.log(
+    `Attaching to Token contract address ${myTokenContractAddress}...`
+  );
+  const myTokenContract = new ethers.Contract(
+    myTokenContractAddress,
+    myTokenJson.abi,
+    signer
+  ) as MyToken;
+
+  // We check here that we're successfully creating the snapshot/checkpoint
+  let currentCheckpointsNumber = await myTokenContract.numCheckpoints(
+    wallet.address
+  );
+  console.log(
+    `Number of checkpoints prior the self-delegation is ${currentCheckpointsNumber}`
+  );
 
   const selfDelegate = childProcess.fork(__dirname + "/delegate", [
     myTokenContractAddress,
@@ -29,7 +52,14 @@ async function main() {
   ]);
 
   // Phase 2: deploy ballot
-  selfDelegate.on("exit", () => {
+  selfDelegate.on("exit", async () => {
+    currentCheckpointsNumber = await myTokenContract.numCheckpoints(
+      wallet.address
+    );
+    console.log(
+      `Number of checkpoints after the self-delegation is ${currentCheckpointsNumber}`
+    );
+
     const deployBallot = childProcess.fork(__dirname + "/deploymentBallot", [
       network,
       myTokenContractAddress,
