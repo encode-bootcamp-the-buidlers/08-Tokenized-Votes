@@ -1,8 +1,7 @@
 import "dotenv/config";
 import { ethers } from "ethers";
-import * as myTokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
 import * as customBalletJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
-import { getSignerProvider, getVotingAddresses, getWallet } from "./utils";
+import { getSignerProvider, getWallet } from "./utils";
 
 function convertStringArrayToBytes32(array: string[]) {
   const bytes32Array = [];
