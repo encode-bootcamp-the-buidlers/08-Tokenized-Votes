@@ -63,6 +63,8 @@ async function main() {
     proposalIndexToVote,
     ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
   );
+  
+  await voteTx.wait();
 
   const proposalUpdated = await ballotContract.proposals(proposalIndexToVote);
   console.log(
