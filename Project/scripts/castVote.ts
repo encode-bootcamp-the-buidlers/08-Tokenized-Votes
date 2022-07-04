@@ -63,7 +63,7 @@ async function main() {
     proposalIndexToVote,
     ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
   );
-  
+
   await voteTx.wait();
 
   const proposalUpdated = await ballotContract.proposals(proposalIndexToVote);
@@ -80,7 +80,7 @@ async function main() {
   );
   const spentVotePower = await ballotContract.spentVotePower(signerAddress);
   console.log(
-    `Spent vote power for ${signerAddress}: ${parseFloat(
+    `Spent voting power for ${signerAddress}: ${parseFloat(
       ethers.utils.formatEther(spentVotePower)
     )}`
   );
