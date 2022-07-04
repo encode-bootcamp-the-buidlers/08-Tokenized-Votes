@@ -147,6 +147,19 @@ https://ropsten.etherscan.io/address/0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6#
 ✨  Done in 38.27s.
 ```
 
+### Balance
+
+```shell
+❯ yarn ts-node scripts/getBalance.ts 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26 0x4bFC74983D6338D3395A00118546614bB78472c2 ropsten
+yarn run v1.22.15
+$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/ts-node scripts/getBalance.ts 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26 0x4bFC74983D6338D3395A00118546614bB78472c2 ropsten
+Connecting to provider...
+Using address 0x4bFC74983D6338D3395A00118546614bB78472c2
+Attaching to Token contract address 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26...
+Account 0x4bFC74983D6338D3395A00118546614bB78472c2 has currently 20 tokens balance and 20.0 votes
+✨  Done in 5.54s.
+```
+
 ### Voting
 
 ```shell
