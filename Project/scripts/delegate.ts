@@ -11,13 +11,14 @@ async function main() {
   ) {
     throw new Error("MyToken contract address needs to be specified.");
   }
-  const amount = process.argv[3];
-  if (!amount || isNaN(Number(amount))) {
-    throw new Error("Amount needs to be specified");
-  }
-  const network = process.argv[4];
+  const network = process.argv[3];
   if (!network) {
     throw new Error("Network needs to be specified.");
+  }
+  // Optional arguments
+  const amount = process.argv[4];
+  if (amount && isNaN(Number(amount))) {
+    throw new Error("Amount needs to be a number");
   }
   let delegateeAddress = process.argv[5];
   if (delegateeAddress && !ethers.utils.isAddress(delegateeAddress)) {
@@ -44,12 +45,14 @@ async function main() {
     delegateeAddress
   );
 
-  const mintTx = await myTokenContract.mint(
-    delegateeAddress,
-    ethers.utils.parseEther(amount)
-  );
-  await mintTx.wait();
-  console.log(`Successfully minted ${amount}!`);
+  if (amount) {
+    const mintTx = await myTokenContract.mint(
+      delegateeAddress,
+      ethers.utils.parseEther(amount)
+    );
+    await mintTx.wait();
+    console.log(`Successfully minted ${amount}!`);
+  }
 
   const delegateTx = await myTokenContract.delegate(delegateeAddress);
   await delegateTx.wait();
@@ -61,7 +64,9 @@ async function main() {
   const isSelfDelegation = wallet.address === delegateeAddress;
 
   let outputString = `${isSelfDelegation ? "Self-" : ""}Delegation:\n`;
-  outputString += `Address ${signer.address} successfully delegated  ${amount} of voting power to ${delegateeAddress}`;
+  outputString += `Address ${signer.address} successfully delegated  ${
+    amount || 0
+  } of voting power to ${delegateeAddress}`;
   outputString += `${isSelfDelegation ? " to self" : ""}\n`;
   outputString += `Current voting power for address ${delegateeAddress} is ${parseFloat(
     ethers.utils.formatEther(postDelegateVotePower)

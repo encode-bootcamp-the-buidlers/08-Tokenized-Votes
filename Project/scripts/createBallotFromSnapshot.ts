@@ -15,16 +15,13 @@ async function main() {
   if (!myTokenContractAddress) {
     throw new Error("MyToken contract address needs to be specified.");
   }
-  const amount = process.argv[3];
-  if (!amount) {
-    throw new Error(
-      "Amount of tokens to be self-delegated needs to be specified."
-    );
-  }
-  const network = process.argv[4];
+  const network = process.argv[3];
   if (!network) {
     throw new Error("Network needs to be specified.");
   }
+  // Optional argument
+  const amount = process.argv[3];
+
   const wallet = getWallet();
   const { signer } = getSignerProvider(wallet, network);
 
@@ -47,8 +44,8 @@ async function main() {
 
   const selfDelegate = childProcess.fork(__dirname + "/delegate", [
     myTokenContractAddress,
-    amount,
     network,
+    amount,
   ]);
 
   // Phase 2: deploy ballot
