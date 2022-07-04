@@ -20,9 +20,9 @@
 
 ### CustomBallot
 
-- Ropsten address of deployed contract: 0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6
-- Transaction: 0xc79e33d63cc968eb6c0948a4d7ce24378655612d3be9604f1b62ae05f4ecf88e
-- [Block Explorer](https://ropsten.etherscan.io/address/0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6)
+- Ropsten address of deployed contract: 0xdf74169524cc9f8A74b9b14D4a8B67D524190085
+- Transaction: 0x276b7abc4306731fc39943fe4641662fb97a4b9645eeafbb4047ae50e6e93cf8
+- [Block Explorer](https://ropsten.etherscan.io/address/0xdf74169524cc9f8a74b9b14d4a8b67d524190085)
 
 ## Weekend Project
 
