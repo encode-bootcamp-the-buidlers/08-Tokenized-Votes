@@ -24,7 +24,9 @@ async function main() {
   const { signer } = getSignerProvider(wallet, network);
 
   const balanceBN = await signer.getBalance();
-  const balance = Number(ethers.utils.formatEther(balanceBN));
+  const balance = Number(
+    parseFloat(ethers.utils.formatEther(balanceBN)).toFixed(4)
+  );
   console.log(`Wallet balance ${balance}`);
 
   if (balance < 0.01) {
