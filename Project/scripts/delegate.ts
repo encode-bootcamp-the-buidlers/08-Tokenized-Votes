@@ -11,16 +11,17 @@ async function main() {
   ) {
     throw new Error("MyToken contract address needs to be specified.");
   }
-  const receiverAddress = process.argv[3];
-  if (!receiverAddress || !ethers.utils.isAddress(receiverAddress)) {
-    throw new Error(
-      "Address to delegate voting power/tokens to needs to be specified."
-    );
+  const amount = process.argv[3];
+  if (!amount || isNaN(Number(amount))) {
+    throw new Error("Amount needs to be specified");
   }
-
   const network = process.argv[4];
   if (!network) {
     throw new Error("Network needs to be specified.");
+  }
+  let delegateeAddress = process.argv[5];
+  if (delegateeAddress && !ethers.utils.isAddress(delegateeAddress)) {
+    throw new Error("Wrong address to delegate voting power/tokens.");
   }
 
   console.log("Connecting to provider...");
@@ -28,7 +29,7 @@ async function main() {
   const { signer } = getSignerProvider(wallet, network);
 
   // If delegatee address is not specified, we will default to self-delegation
-  const delegateeAddress = process.argv[5] || wallet.address;
+  delegateeAddress = process.argv[5] || wallet.address;
 
   console.log(
     `Attaching to Token contract address ${myTokenContractAddress}...`
@@ -40,22 +41,31 @@ async function main() {
   ) as MyToken;
 
   const priorDelegateVotePower = await myTokenContract.getVotes(
-    receiverAddress
+    delegateeAddress
   );
 
-  const delegateTx = await myTokenContract.delegate(receiverAddress);
+  const mintTx = await myTokenContract.mint(
+    delegateeAddress,
+    ethers.utils.parseEther(amount)
+  );
+  await mintTx.wait();
+  console.log(`Successfully minted ${amount}!`);
+
+  const delegateTx = await myTokenContract.delegate(delegateeAddress);
   await delegateTx.wait();
 
-  const postDelegateVotePower = await myTokenContract.getVotes(receiverAddress);
+  const postDelegateVotePower = await myTokenContract.getVotes(
+    delegateeAddress
+  );
 
-  const isSelfDelegation = wallet.address === receiverAddress;
+  const isSelfDelegation = wallet.address === delegateeAddress;
 
   let outputString = `${isSelfDelegation ? "Self-" : ""}Delegation:\n`;
-  outputString += `Address ${signer.address} successfully delegated voting power to ${receiverAddress}`;
+  outputString += `Address ${signer.address} successfully delegated  ${amount} of voting power to ${delegateeAddress}`;
   outputString += `${isSelfDelegation ? " to self" : ""}\n`;
-  outputString += `Current voting power for address ${receiverAddress} is ${ethers.utils.formatEther(
-    postDelegateVotePower
-  )}, was ${ethers.utils.formatEther(priorDelegateVotePower)}`;
+  outputString += `Current voting power for address ${delegateeAddress} is ${parseFloat(
+    ethers.utils.formatEther(postDelegateVotePower)
+  )}, was ${parseFloat(ethers.utils.formatEther(priorDelegateVotePower))}`;
 
   console.log(outputString);
 }
