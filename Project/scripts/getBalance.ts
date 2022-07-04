@@ -31,10 +31,11 @@ async function main() {
   ) as MyToken;
 
   const currentBalance = await myTokenContract.balanceOf(receiverAddress);
+  const currentVotes = await myTokenContract.getVotes(receiverAddress);
   console.log(
     `Account ${receiverAddress} has currently ${parseFloat(
       ethers.utils.formatEther(currentBalance)
-    )} tokens balance`
+    )} tokens balance and ${ethers.utils.formatEther(currentVotes)} votes`
   );
 }
 
