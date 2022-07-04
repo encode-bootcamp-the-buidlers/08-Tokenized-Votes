@@ -14,9 +14,9 @@
 
 ### MyToken
 
-- Ropsten address of deployed contract: 0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52
+- Ropsten address of deployed contract: 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26
 - Transaction: 0x043c4ef7aed117650165e9baff5f14e7a909aa2bd33ff7a5f668c1ac1e550031
-- [Block Explorer](https://ropsten.etherscan.io/address/0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52)
+- [Block Explorer](https://ropsten.etherscan.io/address/0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26)
 
 ### CustomBallot
 
@@ -65,7 +65,7 @@ request rate/limit and enable other perks, such as metrics and advanced APIs.
 
 For more details: https://docs.ethers.io/api-keys/
 ==========================
-Contract deployed at 0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52
+Contract deployed at 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26
 Minting tokens for address 0x4bFC74983D6338D3395A00118546614bB78472c2, previous balance : 0.0 tokens...
 Minted tokens for address 0x4bFC74983D6338D3395A00118546614bB78472c2, new balance : 20.0 tokens.
 Self delegating to track voting power and enable checkpoints...
@@ -115,17 +115,17 @@ $ ts-node scripts/createConstructorArgs.ts Pizza Lasagna Icecream
 #### MyToken
 
 ```shell
-❯ yarn hardhat verify --network ropsten 0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52
+❯ yarn hardhat verify --network ropsten 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26
 yarn run v1.22.15
-$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/hardhat verify --network ropsten 0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52
+$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/hardhat verify --network ropsten 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26
 Nothing to compile
 No need to generate any newer typings.
 Successfully submitted source code for contract
-contracts/Token.sol:MyToken at 0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52
+contracts/Token.sol:MyToken at 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26
 for verification on the block explorer. Waiting for verification result...
 
 Successfully verified contract MyToken on Etherscan.
-https://ropsten.etherscan.io/address/0x5Acd734B0743919CAFA866818dCcCcd34c7d5f52#code
+https://ropsten.etherscan.io/address/0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26#code
 ✨  Done in 36.31s.
 ```
 
@@ -181,7 +181,7 @@ Spent vote power for 0x4bFC74983D6338D3395A00118546614bB78472c2 : 5.0
 ### Results
 
 ```shell
-❯ yarn ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten 
+❯ yarn ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten
 yarn run v1.22.15
 $ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten
 Connecting to provider...
