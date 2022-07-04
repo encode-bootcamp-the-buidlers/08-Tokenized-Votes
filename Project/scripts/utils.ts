@@ -1,4 +1,6 @@
 import { ethers } from "ethers";
+import dotenv from "dotenv";
+dotenv.config();
 
 function getWallet(): ethers.Wallet {
   // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
