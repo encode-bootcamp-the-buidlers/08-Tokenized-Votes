@@ -147,6 +147,19 @@ https://ropsten.etherscan.io/address/0x662F26b3A3Ddd5E91D5e6B85Fd9E253a873e33E6#
 ✨  Done in 38.27s.
 ```
 
+### Balance
+
+```shell
+❯ yarn ts-node scripts/getBalance.ts 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26 0x4bFC74983D6338D3395A00118546614bB78472c2 ropsten
+yarn run v1.22.15
+$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/ts-node scripts/getBalance.ts 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26 0x4bFC74983D6338D3395A00118546614bB78472c2 ropsten
+Connecting to provider...
+Using address 0x4bFC74983D6338D3395A00118546614bB78472c2
+Attaching to Token contract address 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26...
+Account 0x4bFC74983D6338D3395A00118546614bB78472c2 has currently 20 tokens balance and 20.0 votes
+✨  Done in 5.54s.
+```
+
 ### Voting
 
 ```shell
@@ -163,4 +176,29 @@ Proposal to vote on has now 5.0 votes.
 Account 0x4bFC74983D6338D3395A00118546614bB78472c2 has now 15.0 voting power left.
 Spent vote power for 0x4bFC74983D6338D3395A00118546614bB78472c2 : 5.0
 ✨  Done in 7.99s.
+```
+
+### Results
+
+```shell
+❯ yarn ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten 
+yarn run v1.22.15
+$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten
+Connecting to provider...
+Using address 0x4bFC74983D6338D3395A00118546614bB78472c2
+Attaching to Ballot contract address 0xdf74169524cc9f8A74b9b14D4a8B67D524190085...
+
+      Contract Address:  0xdf74169524cc9f8A74b9b14D4a8B67D524190085
+      -----------------------------------------------------
+      Name:  Pizza
+      Vote count:  0
+      -----------------------------------------------------
+      Name:  Lasagna
+      Vote count:  15
+      -----------------------------------------------------
+      Name:  Icecream
+      Vote count:  20
+      -----------------------------------------------------
+      Winning proposal: Icecream
+✨  Done in 5.04s.
 ```
