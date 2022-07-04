@@ -35,7 +35,9 @@ async function main() {
   console.log(
     `Account ${receiverAddress} has currently ${parseFloat(
       ethers.utils.formatEther(currentBalance)
-    )} tokens balance and ${ethers.utils.formatEther(currentVotes)} votes`
+    )} tokens balance and ${parseFloat(
+      ethers.utils.formatEther(currentVotes)
+    )} votes`
   );
 }
 

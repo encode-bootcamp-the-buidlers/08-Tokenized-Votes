@@ -13,7 +13,9 @@ async function main() {
   const { signer } = getSignerProvider(wallet, network);
   const signerAddress = await signer.getAddress();
   const balanceBN = await signer.getBalance();
-  const balance = Number(ethers.utils.formatEther(balanceBN));
+  const balance = Number(
+    parseFloat(ethers.utils.formatEther(balanceBN)).toFixed(4)
+  );
   console.log(`Wallet balance ${balance}`);
 
   if (balance < 0.01) {
@@ -38,8 +40,8 @@ async function main() {
   // minting for signer
   const previousBalanceTx = await myTokenContract.balanceOf(signerAddress);
   console.log(
-    `Minting tokens for address ${signerAddress}, previous balance : ${ethers.utils.formatEther(
-      previousBalanceTx
+    `Minting tokens for address ${signerAddress}, previous balance : ${parseFloat(
+      ethers.utils.formatEther(previousBalanceTx)
     )} tokens...`
   );
   const mintTx = await myTokenContract.mint(
@@ -49,8 +51,8 @@ async function main() {
   await mintTx.wait();
   const newBalanceTx = await myTokenContract.balanceOf(signerAddress);
   console.log(
-    `Minted tokens for address ${signerAddress}, new balance : ${ethers.utils.formatEther(
-      newBalanceTx
+    `Minted tokens for address ${signerAddress}, new balance : ${parseFloat(
+      ethers.utils.formatEther(newBalanceTx)
     )} tokens.\n`
   );
 
@@ -79,9 +81,9 @@ async function main() {
   await delegateTx.wait();
   const newVotesTx = await myTokenContract.getVotes(signerAddress);
   console.log(
-    `Address ${signerAddress}, previous votes: ${ethers.utils.formatEther(
-      previousVotesTx
-    )} current votes: ${ethers.utils.formatEther(newVotesTx)}`
+    `Address ${signerAddress}, previous votes: ${parseFloat(
+      ethers.utils.formatEther(previousVotesTx)
+    )} current votes: ${parseFloat(ethers.utils.formatEther(newVotesTx))}`
   );
 
   console.log("Completed");

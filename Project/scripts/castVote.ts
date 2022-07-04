@@ -50,38 +50,38 @@ async function main() {
     proposalIndexToVote
   );
   console.log(
-    `Proposal to vote on has currently ${ethers.utils.formatEther(
-      currentProposalToVote.voteCount
+    `Proposal to vote on has currently ${parseFloat(
+      ethers.utils.formatEther(currentProposalToVote.voteCount)
     )} votes.`
   );
 
   console.log(
-    `Casting vote on proposal index ${proposalIndexToVote} using ${BASE_VOTE_POWER} vote power...`
+    `Casting vote on proposal index ${proposalIndexToVote} using ${BASE_VOTE_POWER} of voting power...`
   );
 
   const voteTx = await ballotContract.vote(
     proposalIndexToVote,
     ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
   );
-  
+
   await voteTx.wait();
 
   const proposalUpdated = await ballotContract.proposals(proposalIndexToVote);
   console.log(
-    `Proposal to vote on has now ${ethers.utils.formatEther(
-      proposalUpdated.voteCount
+    `Proposal to vote on has now ${parseFloat(
+      ethers.utils.formatEther(proposalUpdated.voteCount)
     )} votes.`
   );
   const votingPowerAfter = await ballotContract.votingPower();
   console.log(
-    `Account ${signerAddress} has now ${ethers.utils.formatEther(
-      votingPowerAfter
+    `Account ${signerAddress} has now ${parseFloat(
+      ethers.utils.formatEther(votingPowerAfter)
     )} voting power left.`
   );
   const spentVotePower = await ballotContract.spentVotePower(signerAddress);
   console.log(
-    `Spent vote power for ${signerAddress} : ${ethers.utils.formatEther(
-      spentVotePower
+    `Spent voting power for ${signerAddress}: ${parseFloat(
+      ethers.utils.formatEther(spentVotePower)
     )}`
   );
 }

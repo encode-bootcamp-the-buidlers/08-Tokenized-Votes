@@ -174,7 +174,7 @@ Proposal to vote on has currently 5.0 votes.
 Casting vote on proposal index 2 using 5 vote power...
 Proposal to vote on has now 5.0 votes.
 Account 0x4bFC74983D6338D3395A00118546614bB78472c2 has now 15.0 voting power left.
-Spent vote power for 0x4bFC74983D6338D3395A00118546614bB78472c2 : 5.0
+Spent voting power for 0x4bFC74983D6338D3395A00118546614bB78472c2 : 5.0
 ✨  Done in 7.99s.
 ```
 
