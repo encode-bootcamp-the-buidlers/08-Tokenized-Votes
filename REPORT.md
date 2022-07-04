@@ -42,6 +42,8 @@
 
 ### Deployment
 
+#### Token
+
 ```shell
 ❯ yarn deploy:ropsten:token
 yarn run v1.22.15
@@ -74,6 +76,24 @@ Minting 20 tokens to 0x5Ed02CF700D92d64776e11c6E85D2D7d11e9bcf8...
 Completed
 __________________________________________________
 ✨  Done in 98.65s.
+```
+
+#### Ballot
+
+```shell
+❯ ts-node scripts/deploymentBallot.ts ropsten 0xa3F57F3F651e6E55d9eF6FC21D960B60ED375F26 Pizza Lasagna Icecream
+Using address 0x4bFC74983D6338D3395A00118546614bB78472c2
+Wallet balance 9.973081594375465
+__________________________________________________
+Deploying CustomBallot contract
+Proposals:
+Proposal N. 1: Pizza
+Proposal N. 2: Lasagna
+Proposal N. 3: Icecream
+Awaiting confirmations
+Completed
+Contract deployed at 0xdf74169524cc9f8A74b9b14D4a8B67D524190085
+__________________________________________________
 ```
 
 ### Create constructor args
