@@ -31,7 +31,12 @@ function getSignerProvider(
   if (network === "localhost") {
     provider = new ethers.providers.JsonRpcProvider();
   } else {
-    provider = ethers.providers.getDefaultProvider(network);
+    const options: Record<string, any> = {};
+    if (process.env.ETHERSCAN_API_KEY)
+      options.etherscan = process.env.ETHERSCAN_API_KEY;
+    if (process.env.INFURA_URL) options.infura = process.env.INFURA_URL;
+
+    provider = ethers.providers.getDefaultProvider(network, options);
   }
   const signer = wallet.connect(provider);
 

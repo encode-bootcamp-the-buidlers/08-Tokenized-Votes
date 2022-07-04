@@ -67,7 +67,7 @@ async function main() {
   const proposalUpdated = await ballotContract.proposals(proposalIndexToVote);
   console.log(
     `Proposal to vote on has now ${ethers.utils.formatEther(
-      currentProposalToVote.voteCount
+      proposalUpdated.voteCount
     )} votes.`
   );
   const votingPowerAfter = await ballotContract.votingPower();
