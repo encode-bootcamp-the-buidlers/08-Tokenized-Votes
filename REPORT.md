@@ -177,3 +177,28 @@ Account 0x4bFC74983D6338D3395A00118546614bB78472c2 has now 15.0 voting power lef
 Spent vote power for 0x4bFC74983D6338D3395A00118546614bB78472c2 : 5.0
 ✨  Done in 7.99s.
 ```
+
+### Results
+
+```shell
+❯ yarn ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten 
+yarn run v1.22.15
+$ /Users/tobias/Code/encode_bootcamp/08-Tokenized-Votes/Project/node_modules/.bin/ts-node scripts/getResults.ts 0xdf74169524cc9f8A74b9b14D4a8B67D524190085 ropsten
+Connecting to provider...
+Using address 0x4bFC74983D6338D3395A00118546614bB78472c2
+Attaching to Ballot contract address 0xdf74169524cc9f8A74b9b14D4a8B67D524190085...
+
+      Contract Address:  0xdf74169524cc9f8A74b9b14D4a8B67D524190085
+      -----------------------------------------------------
+      Name:  Pizza
+      Vote count:  0
+      -----------------------------------------------------
+      Name:  Lasagna
+      Vote count:  15
+      -----------------------------------------------------
+      Name:  Icecream
+      Vote count:  20
+      -----------------------------------------------------
+      Winning proposal: Icecream
+✨  Done in 5.04s.
+```
