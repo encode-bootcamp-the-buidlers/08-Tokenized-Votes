@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'yarn'
+          cache: "yarn"
           cache-dependency-path: ./Project/yarn.lock
       - name: Install Dependencies
         working-directory: ./Project
@@ -22,3 +22,6 @@ jobs:
       - name: Run Hardhat Tests
         working-directory: ./Project
         run: yarn hardhat test
+      - name: Run solidity linter
+        working-directory: ./Project
+        run: yarn solhint 'contracts/**/*.sol'
