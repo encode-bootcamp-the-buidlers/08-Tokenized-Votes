@@ -72,9 +72,10 @@ contract CustomBallot {
     /// @return winningProposal_ The winning proposal index
     function winningProposal() public view returns (uint256 winningProposal_) {
         uint256 winningVoteCount = 0;
-        for (uint256 p = 0; p < proposals.length; p++) {
-            if (proposals[p].voteCount > winningVoteCount) {
-                winningVoteCount = proposals[p].voteCount;
+        Proposal[] memory localProposals = proposals;
+        for (uint256 p = 0; p < localProposals.length; ++p) {
+            if (localProposals[p].voteCount > winningVoteCount) {
+                winningVoteCount = localProposals[p].voteCount;
                 winningProposal_ = p;
             }
         }
