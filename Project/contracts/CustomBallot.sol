@@ -16,7 +16,7 @@ contract CustomBallot {
      * We will work here with all relevant values for the 'vote' event.
      * - voter is the address voting
      * - proposal is the index of the proposal voted for
-     * - weight is accumulated by delegation. It is the voting power represented uin int256
+     * - weight is accumulated by delegation. It is the voting power represented in uint256
      * - proposalVotes is the current votes that the voted proposal has
      */
     event Voted(
