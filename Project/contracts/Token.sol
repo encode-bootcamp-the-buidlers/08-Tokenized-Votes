@@ -21,7 +21,7 @@ contract MyToken is ERC20, AccessControl, ERC20Permit, ERC20Votes {
         _grantRole(MINTER_ROLE, msg.sender);
     }
 
-    /// @notice Mint new tokens
+    /// @notice Mint new tokens. Increases the total supply
     /// @dev Only the contract deployer (who holds the minter role) can mint
     /// @param to Address we are sending the minted tokens to
     /// @param amount Amount of tokens to mint
@@ -31,20 +31,8 @@ contract MyToken is ERC20, AccessControl, ERC20Permit, ERC20Votes {
 
     // The following functions are overrides required by Solidity.
 
-    /**
-     * @dev Hook that is called after any transfer of tokens. This includes
-     * minting and burning.
-     *
-     * Calling conditions:
-     *
-     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
-     * has been transferred to `to`.
-     * - when `from` is zero, `amount` tokens have been minted for `to`.
-     * - when `to` is zero, `amount` of ``from``'s tokens have been burned.
-     * - `from` and `to` are never both zero.
-     *
-     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
-     */
+    /// Hook that is called after any transfer of tokens. This includes minting and burning.
+    /// @inheritdoc ERC20
     function _afterTokenTransfer(
         address from,
         address to,
@@ -53,15 +41,7 @@ contract MyToken is ERC20, AccessControl, ERC20Permit, ERC20Votes {
         super._afterTokenTransfer(from, to, amount);
     }
 
-    /** @dev Creates `amount` tokens and assigns them to `account`, increasing
-     * the total supply.
-     *
-     * Emits a {Transfer} event with `from` set to the zero address.
-     *
-     * Requirements:
-     *
-     * - `account` cannot be the zero address.
-     */
+    /// @inheritdoc ERC20
     function _mint(address to, uint256 amount)
         internal
         override(ERC20, ERC20Votes)
@@ -69,17 +49,8 @@ contract MyToken is ERC20, AccessControl, ERC20Permit, ERC20Votes {
         super._mint(to, amount);
     }
 
-    /**
-     * @dev Destroys `amount` tokens from `account`, reducing the
-     * total supply.
-     *
-     * Emits a {Transfer} event with `to` set to the zero address.
-     *
-     * Requirements:
-     *
-     * - `account` cannot be the zero address.
-     * - `account` must have at least `amount` tokens.
-     */
+    /// Destroys `amount` tokens from `account`, reducing the total supply.
+    /// @inheritdoc ERC20
     function _burn(address account, uint256 amount)
         internal
         override(ERC20, ERC20Votes)
